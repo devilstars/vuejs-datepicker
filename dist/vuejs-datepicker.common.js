@@ -483,7 +483,8 @@ var script = {
       }
 
       if (this.typeable) {
-        var typedDate = this.parse(this.input.value);
+        var fn = this.parse || Date.parse;
+        var typedDate = fn(this.input.value);
 
         if (!isNaN(typedDate)) {
           this.typedDate = this.input.value;
@@ -497,7 +498,9 @@ var script = {
      * called once the input is blurred
      */
     inputBlurred: function inputBlurred() {
-      if (this.typeable && isNaN(this.parse(this.input.value))) {
+      var fn = this.parse || Date.parse;
+
+      if (this.typeable && isNaN(fn(this.input.value))) {
         this.clearDate();
         this.input.value = null;
         this.typedDate = null;
